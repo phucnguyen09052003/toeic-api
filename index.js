@@ -45,7 +45,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Import các route
 const topicsRoutes = require('./routes/topic');
-// const vocabularyRoutes = require('./routes/vocabulary');
+const vocabularyRoutes = require('./routes/vocabulary');
 // const questionsRoutes = require('./routes/questions');
 // const partsRoutes = require('./routes/parts');
 // const examsRoutes = require('./routes/exams');
@@ -55,7 +55,7 @@ const userRoutes = require('./routes/users');
 
 // Sử dụng các route
 app.use('/api/topic', topicsRoutes);
-// app.use('/api/vocabulary', vocabularyRoutes);
+app.use('/api/vocabulary', vocabularyRoutes);
 // app.use('/api/questions', questionsRoutes);
 // app.use('/api/parts', partsRoutes);
 // app.use('/api/exams', examsRoutes);
