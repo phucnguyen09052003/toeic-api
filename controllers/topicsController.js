@@ -1,4 +1,4 @@
-const topicService = require('../Services/TopicService');
+const topicService = require('../Services/TopicService.js');
 
 exports.getAllTopics = async (req, res) => {
     try {

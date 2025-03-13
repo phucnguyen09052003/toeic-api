@@ -1,6 +1,6 @@
 const sql = require('mssql');
 const db = require("../dbconfig");
-const UserService= require("../Services/UserService");
+const UserService= require("../Services/UserService.js");
 // API để lấy tất cả người dùng
 // exports.getUser = async (req, res) => {
 //     try {
