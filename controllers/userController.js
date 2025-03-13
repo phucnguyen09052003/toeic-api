@@ -1,10 +1,10 @@
 const sql = require('mssql');
-
+const db = require("../dbconfig");
 
 // API để lấy tất cả người dùng
 exports.getUser = async (req, res) => {
     try {
-        const pool = await sql.connect();
+        const pool = await db.getPool();
         const result = await pool.request().query('SELECT * FROM Users');
         console.log('Dữ liệu users:', result.recordset); // Log dữ liệu trả về
         res.json(result.recordset);
