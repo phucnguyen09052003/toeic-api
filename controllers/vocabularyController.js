@@ -1,4 +1,4 @@
-const vocabularyService = require("../services/VocabularyService.js");
+const vocabularyService = require("../Services/VocabularyService.js");
 
 exports.getAllVocabulary = async (req, res) => {
     try {
