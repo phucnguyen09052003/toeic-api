@@ -1,15 +1,37 @@
 const sql = require('mssql');
 const db = require("../dbconfig");
-
+const UserService= require("../Services/UserService");
 // API để lấy tất cả người dùng
+// exports.getUser = async (req, res) => {
+//     try {
+//         const pool = await db.getPool();
+//         const result = await pool.request().query('SELECT * FROM Users');
+//         console.log('Dữ liệu users:', result.recordset); // Log dữ liệu trả về
+//         res.json(result.recordset);
+//     } catch (err) {
+//         console.error('Lỗi khi lấy dữ liệu users:', err.message); // Log lỗi
+//         res.status(500).send(err.message);
+//     }
+// };
 exports.getUser = async (req, res) => {
     try {
-        const pool = await db.getPool();
-        const result = await pool.request().query('SELECT * FROM Users');
-        console.log('Dữ liệu users:', result.recordset); // Log dữ liệu trả về
-        res.json(result.recordset);
+        const users = await UserService.getUser();
+        res.json(users);
     } catch (err) {
-        console.error('Lỗi khi lấy dữ liệu users:', err.message); // Log lỗi
+        res.status(500).send(err.message);
+    }
+};
+exports.getUserByName = async (req, res) => {
+    try {
+        console.log("req.params:", req.params.username);
+        const users = await UserService.getUserByName(req.params.username);
+        if (!users) {
+            return res.status(404).send("Không tìm thấy user.");
+        }
+        res.json(users);
+       
+    } catch (err) {
+        
         res.status(500).send(err.message);
     }
 };
@@ -66,25 +88,25 @@ exports.resetpassword = async (req, res) => {
 };
 
 // API để lấy người dùng theo tên đăng nhập
-exports.getUserByName = async (req, res) => {
-    const { username } = req.params;
+// exports.getUserByName = async (req, res) => {
+//     const { username } = req.params;
 
-    try {
-        const pool = await sql.connect();
-        const result = await pool.request()
-            .input('Username', sql.NVarChar, username)
-            .query('SELECT * FROM Users WHERE Username = @Username');
+//     try {
+//         const pool = await sql.connect();
+//         const result = await pool.request()
+//             .input('Username', sql.NVarChar, username)
+//             .query('SELECT * FROM Users WHERE Username = @Username');
 
-        if (result.recordset.length > 0) {
-            res.json(result.recordset[0]); // Trả về thông tin người dùng
-        } else {
-            res.status(404).json({ message: 'User not found.' }); // Không tìm thấy người dùng
-        }
-    } catch (err) {
-        console.error('Lỗi khi lấy thông tin người dùng:', err.message); // Log lỗi
-        res.status(500).send(err.message);
-    }
-};
+//         if (result.recordset.length > 0) {
+//             res.json(result.recordset[0]); // Trả về thông tin người dùng
+//         } else {
+//             res.status(404).json({ message: 'User not found.' }); // Không tìm thấy người dùng
+//         }
+//     } catch (err) {
+//         console.error('Lỗi khi lấy thông tin người dùng:', err.message); // Log lỗi
+//         res.status(500).send(err.message);
+//     }
+// };
 
 exports.updateUser = async (req, res) => {
     const { username } = req.params; // Lấy username từ params

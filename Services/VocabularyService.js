@@ -14,6 +14,7 @@ class VocabularyService extends IVocabularyService {
 
     async getWordById(id) {
         try {
+            console.log("dulieu: ",id)
             const pool = await db.getPool();
             const result = await pool.request()
                 .input("id", db.sql.Int, id)

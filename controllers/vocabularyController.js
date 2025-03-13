@@ -10,7 +10,7 @@ exports.getAllVocabulary = async (req, res) => {
 };
 
 exports.getWordById = async (req, res) => {
-    try {
+    try {     
         const word = await vocabularyService.getWordById(req.params.id);
         if (!word) {
             return res.status(404).send("Không tìm thấy từ.");
@@ -25,7 +25,9 @@ exports.getVocabularyByTopic = async (req, res) => {
     try {
         const words = await vocabularyService.getVocabularyByTopic(req.params.topicId);
         res.json(words);
+        console.log("du lieu:" ,req.params.topicId);
     } catch (err) {
+        
         res.status(500).send(err.message);
     }
 };
